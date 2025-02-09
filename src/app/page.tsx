@@ -3,9 +3,10 @@ import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import Login from './components/Login'
 import Chat from './components/Chat'
-
+import {Alert} from '@mui/material';
 import {useRouter} from "next/navigation";
-import {useState} from "react";
+import {useEffect, useState} from "react";
+import CheckIcon from '@mui/icons-material/Check';
 
 const darkTheme = createTheme({
     palette: {
@@ -15,10 +16,14 @@ const darkTheme = createTheme({
 
 export default function Home() {
     const router = useRouter();
-    const [success, setSuccess] = useState(true);
+    const [success, setSuccess] = useState(false);
+    const [alertMessage, setAlertMessage] = useState<string>('');
+    const [showAlert, setShowAlert] = useState(false);
+    const [isClient, setIsClient] = useState(false);
 
     const handleLoginSuccess = () => {
-        // setTimeout(() => router.push("/chat"), 1000);
+        setAlertMessage('Login Success!');
+        setShowAlert(true)
         setSuccess(true);
     };
 
@@ -26,13 +31,26 @@ export default function Home() {
         console.log(message)
     };
 
-  return (
+    useEffect(() => {
+        setIsClient(true);
+    }, [])
+
+    if (!isClient) return null;
+
+    return (
       <ThemeProvider theme={darkTheme}>
           <CssBaseline />
-          <main className='w-full py-4 px-40 text-center font-[family-name:var(--font-geist-sans)]'>
+          <main className='w-full py-4 px-40 text-center font-[family-name:var(--font-geist-sans)] relative'>
               <h1 style={{fontSize:28, color:'#B4B5B4'}}>
                   Intelligent Digital Asset Assistant
               </h1>
+              {showAlert && (
+                  <div className="w-1/4 fixed right-2 top-5">
+                      <Alert severity="success"  onClose={() => setShowAlert(false)}>
+                          {alertMessage}
+                      </Alert>
+                  </div>
+              )}
               {success? (
                   <Chat/>
               ) : (

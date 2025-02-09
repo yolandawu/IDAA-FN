@@ -1,5 +1,5 @@
 'use client'
-import {useState} from 'react'
+import {useState, useRef, useEffect} from 'react'
 import TextField from '@mui/material/TextField';
 import {Button,Alert} from '@mui/material';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
@@ -12,19 +12,36 @@ export default function Chat() {
     const [messages, setMessages] = useState<{ type: 'user' | 'bot', text: string }[]>([]);
     const [alertMessage, setAlertMessage] = useState<string>('');
     const [showAlert, setShowAlert] = useState(false);
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const messagesContainerRef = useRef(null);
+
+    // function to scroll to bottom
+    const scrollToBotton = () => {
+        if (messagesContainerRef.current){
+            messagesContainerRef.current.scrollTop = messagesContainerRef.current.scrollHeight;
+        }
+    }
+
+    useEffect(() => {
+        scrollToBotton();
+    }, [messages]);
 
     const onBtnSendClick = async () => {
         // Append user message to chat
-
+        if (userInput.length === 0 || isSubmitting) {
+            return
+        }
+        setIsSubmitting(true)
+        setUserInput("");
         setMessages((prev) => [...prev, { type: 'user', text: userInput }]);
 
         sendMessage(userInput)
             .then((res)=>{
                 console.log(res)
+                setIsSubmitting(false)
                 if(res && res.agent_result) {
                     const botReply = res.agent_result || "Sorry, I didn't understand that."; // Ensure fallback
                     setMessages((prev) => [...prev, { type: 'bot', text: botReply }]);
-                    setUserInput("");
                 }
                 else {
                     setAlertMessage('Oooops! Network error, please try again later.');
@@ -35,17 +52,20 @@ export default function Chat() {
             .catch((err)=>{
                 setAlertMessage('Oooops! Network error, please try again later.');
                 setShowAlert(true)
+                setIsSubmitting(false)
             })
     };
 
     return (
-        <div className="relative text-left flex flex-col" style={{height:'96%'}}>
+        <div className="relative text-left flex flex-col relateive" style={{height:'96%'}}>
             {showAlert && (
-            <Alert variant="filled" severity="warning" onClose={() => setShowAlert(false)}>
-                {alertMessage}
-            </Alert>
+                <div className="w-1/4 fixed right-2 top-5">
+                    <Alert severity="warning" onClose={() => setShowAlert(false)}>
+                        {alertMessage}
+                    </Alert>
+                </div>
                 )}
-            <div className='py-5 flex-1 overflow-scroll'>
+            <div className='py-5 flex-1 overflow-scroll' ref={messagesContainerRef}>
                 {messages.map((msg, index) =>
                     msg.type === 'user' ?
                         <DialogueUser key={index} userReply={msg.text} /> :
