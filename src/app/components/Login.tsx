@@ -1,7 +1,7 @@
 'use client'
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
-import {useState} from "react";
+import {useState, useEffect} from "react";
 import testAccount from '@/data/test-account.json'
 
 interface LoginProps {
@@ -15,6 +15,17 @@ export default function Login({onSuccess, onFail }:LoginProps) {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
 
+    useEffect(()=>{
+        const storedUsername = localStorage.getItem("username");
+        const storedPassword = localStorage.getItem("password");
+
+        if (storedUsername && storedPassword) {
+            setIsLogin(true);
+            if (onSuccess) {
+                onSuccess("Already logged in");
+            }
+        }
+    }, [])
     const onLoginClick = async(e:React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
         if(isLogin)
@@ -27,6 +38,8 @@ export default function Login({onSuccess, onFail }:LoginProps) {
         if (username == testAccount.username && password == testAccount.password) {
             setIsLogin(false)
             if (onSuccess) {
+                localStorage.setItem("username", username);
+                localStorage.setItem("password", password);
                 onSuccess("success"); // Trigger callback from Home.tsx
             }
         } else {
