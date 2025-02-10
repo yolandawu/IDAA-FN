@@ -13,7 +13,7 @@ export default function Chat() {
     const [alertMessage, setAlertMessage] = useState<string>('');
     const [showAlert, setShowAlert] = useState(false);
     const [isSubmitting, setIsSubmitting] = useState(false);
-    const messagesContainerRef = useRef(null);
+    const messagesContainerRef = useRef<HTMLDivElement | null>(null);
 
     // function to scroll to bottom
     const scrollToBotton = () => {
@@ -37,7 +37,6 @@ export default function Chat() {
 
         sendMessage(userInput)
             .then((res)=>{
-                console.log(res)
                 setIsSubmitting(false)
                 if(res && res.agent_result) {
                     const botReply = res.agent_result || "Sorry, I didn't understand that."; // Ensure fallback
@@ -49,7 +48,7 @@ export default function Chat() {
                 }
 
             })
-            .catch((err)=>{
+            .catch(()=>{
                 setAlertMessage('Oooops! Network error, please try again later.');
                 setShowAlert(true)
                 setIsSubmitting(false)
