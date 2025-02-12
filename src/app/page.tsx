@@ -4,7 +4,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import Login from './components/Login'
 import Chat from './components/Chat'
 import {Alert} from '@mui/material';
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import Logout from "./components/Logout";
 
 const darkTheme = createTheme({
@@ -13,10 +13,19 @@ const darkTheme = createTheme({
     },
 });
 
+
 export default function Home() {
     const [success, setSuccess] = useState(false);
     const [alertMessage, setAlertMessage] = useState<string>('');
     const [showAlert, setShowAlert] = useState(false);
+    useEffect(()=>{
+        const storedUsername = localStorage.getItem("username");
+        const storedPassword = localStorage.getItem("password");
+
+        if (storedUsername && storedPassword) {
+            setSuccess(true);
+        }
+    }, [])
 
     const handleLoginSuccess = () => {
         setAlertMessage('Login Success!');

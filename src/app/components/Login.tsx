@@ -15,17 +15,7 @@ export default function Login({onSuccess, onFail }:LoginProps) {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
 
-    useEffect(()=>{
-        const storedUsername = localStorage.getItem("username");
-        const storedPassword = localStorage.getItem("password");
 
-        if (storedUsername && storedPassword) {
-            setIsLogin(true);
-            if (onSuccess) {
-                onSuccess("Already logged in");
-            }
-        }
-    }, [])
     const onLoginClick = async(e:React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
         if(isLogin)

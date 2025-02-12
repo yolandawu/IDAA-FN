@@ -26,6 +26,7 @@ export default function Chat() {
         scrollToBotton();
     }, [messages]);
 
+
     const onBtnSendClick = async () => {
         // Append user message to chat
         if (userInput.length === 0 || isSubmitting) {
@@ -83,6 +84,16 @@ export default function Chat() {
                         onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
                             setUserInput(event.target.value);
                         }}
+                        onKeyDown={(event: React.KeyboardEvent<HTMLInputElement>) => {
+                            if (event.key === "Enter" && !event.shiftKey) {
+                                event.preventDefault()
+                                onBtnSendClick()
+                            }
+                            else if ((event.metaKey || event.ctrlKey) && event.key === "Enter") {
+                                event.preventDefault(); // Prevents adding a new line
+                                setUserInput((prev) => prev + "\n");
+                            }}
+                        }
                     />
                 </div>
                 <div className="absolute bottom-6 right-1">
