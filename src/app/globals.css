@@ -36,4 +36,8 @@ body {
 h1 {
   font-family: 'Lato-Bold', sans-serif;
 }
+h1{font-size: xxx-large; font-weight: bolder}
+h2{font-size: xx-large; font-weight: bold}
+h3{font-size: large;}
+h4{font-size: large}
 .css-1h0x471-MuiInputBase-input-MuiOutlinedInput-input {margin-bottom:35px}

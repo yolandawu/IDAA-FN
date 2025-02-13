@@ -77,7 +77,7 @@ export default function Chat() {
                     <TextField
                         label=""
                         multiline
-                        rows={4}
+                        rows={3}
                         className="w-full"
                         id='chat-input'
                         value={userInput}
