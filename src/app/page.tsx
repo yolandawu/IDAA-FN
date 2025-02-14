@@ -48,11 +48,13 @@ export default function Home() {
     return (
       <ThemeProvider theme={darkTheme}>
           <CssBaseline />
-          <main className='w-full py-4 px-40 text-center font-[family-name:var(--font-geist-sans)] relative'>
-              <div>
-                  <h1 style={{fontSize:28, color:'#B4B5B4'}}>
+          <main className='w-full py-4 px-40 text-center font-[family-name:var(--font-geist-sans)] relative font-exo2'>
+              <div className="mb-2">
+                  <h1 className='font-monomaniac'>
                       Intelligent Digital Asset Assistant
                   </h1>
+                  <h2 className='font-monomaniac'>(IDAA)</h2>
+                  <h3 className='font-monomaniac' style={{color:'#B4B5B4'}}>Aditya Nikhil Digala, Yang Wu, Vaishnavi Vella</h3>
               </div>
               {success && <Logout onSuccess={onLogoutClick}  />}
 

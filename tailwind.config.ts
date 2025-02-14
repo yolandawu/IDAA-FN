@@ -8,6 +8,10 @@ export default {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        monomaniac: ['MonomaniacOne', 'sans-serif'],
+        exo2: ['exo2, serif']
+      },
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",

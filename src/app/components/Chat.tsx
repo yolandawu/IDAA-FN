@@ -2,7 +2,7 @@
 import {useState, useRef, useEffect, JSX} from 'react'
 import TextField from '@mui/material/TextField';
 import {Button} from '@mui/material';
-import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
+import TelegramIcon from '@mui/icons-material/Telegram';
 import DialogueChatBot from "@/app/components/DialogueChatBot";
 import DialogueUser from "@/app/components/DialogueUser";
 import {sendMessage} from '@/app/api/handler'
@@ -16,6 +16,8 @@ export default function Chat() {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const messagesContainerRef = useRef<HTMLDivElement | null>(null);
     const alertMessage = 'Oooops! Network error, please try again later.'
+
+    const textareaRef = useRef<HTMLTextAreaElement | null>(null);
 
     // function to scroll to bottom
     const scrollToBotton = () => {
@@ -77,7 +79,7 @@ export default function Chat() {
     };
 
     return (
-        <div className="relative text-left flex flex-col relateive" style={{height:'96%'}}>
+        <div className=" text-left flex flex-col relateive" style={{height:'80%'}}>
             <div className='py-5 flex-1 overflow-scroll' ref={messagesContainerRef}>
                 {messages.map((msg, index) =>
                     msg.type === 'user' ?
@@ -85,18 +87,26 @@ export default function Chat() {
                         <DialogueChatBot key={index} chatbotReply={msg.text} />
                 )}
             </div>
-            <div style={{height:'200px'}}>
-                <div className="absolute bottom-5 w-full">
+            <div className="relative">
+                <div className="w-full">
                     <TextField
                         label=""
                         multiline
-                        rows={3}
+                        inputRef={textareaRef}
+                        rows={1}
                         className="w-full"
                         id='chat-input'
                         value={userInput}
                         onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                            setUserInput(event.target.value);
-                        }}
+                                setUserInput(event.target.value);
+                                // Auto-resize the textarea
+                                if (textareaRef.current) {
+                                    textareaRef.current.style.height = "auto"; // Reset height
+                                    const scrollHeight = textareaRef.current.scrollHeight;
+                                    const maxHeight = 4 * 24;
+                                    textareaRef.current.style.height = `${Math.min(scrollHeight, maxHeight)}px`;
+                                }
+                            }}
                         onKeyDown={(event: React.KeyboardEvent<HTMLInputElement>) => {
                             if (event.key === "Enter" && !event.shiftKey) {
                                 event.preventDefault()
@@ -109,9 +119,9 @@ export default function Chat() {
                         }
                     />
                 </div>
-                <div className="absolute bottom-6 right-1">
+                <div className="absolute bottom-2 right-0" >
                     <Button onClick={onBtnSendClick} style={{ borderRadius: "40px" }}>
-                        <ArrowUpwardIcon/>
+                        <TelegramIcon/>
                     </Button>
                 </div>
             </div>
