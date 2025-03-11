@@ -26,8 +26,7 @@ export default function DialogueChatBot({chatbotReply, chatbotChat}: {
 
         // Expand lists with multiplication (e.g., `[118.79] * 24`)
         modifiedMarkdown = modifiedMarkdown.replace(arrayRegex, (_, array, multiplier) => {
-            // @ts-ignore
-            const expandedArray = JSON.parse(array).flatMap((val) => {
+            const expandedArray = JSON.parse(array).flatMap((val:number) => {
                 return Array(Number(multiplier)).fill(val);
             });
             return JSON.stringify(expandedArray);

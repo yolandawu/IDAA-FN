@@ -1,7 +1,7 @@
 import React from 'react';
-import { BarChart, Bar, LineChart, Line, ScatterChart, Scatter, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import { BarChart, Bar, LineChart, Line, ScatterChart, Scatter, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 
-class Chart extends React.Component<{ data: any, chartType: any, xAxisLabel:any, yAxisLabel:any, chartTitle:any }> {
+class Chart extends React.Component<{ data:{ x: string, y: number }[], chartType: any, xAxisLabel:any, yAxisLabel:any, chartTitle:any }> {
     render() {
         const {data, chartType, xAxisLabel, yAxisLabel, chartTitle} = this.props;
 
@@ -27,10 +27,15 @@ class Chart extends React.Component<{ data: any, chartType: any, xAxisLabel:any,
                         />
                         <YAxis stroke='white'
                                label={{ value: '', angle: -90, position: 'insideLeft', fill:'white' }}
-                               tickFormatter={(value) => `$${value.toFixed(2)}`}
+                               tickFormatter={(value) => {
+                                   if (value >= 1e9) return `$${(value / 1e9).toFixed(1)}B`; // Billion
+                                   if (value >= 1e6) return `$${(value / 1e6).toFixed(1)}M`; // Million
+                                   if (value >= 1e3) return `$${(value / 1e3).toFixed(1)}K`; // Thousand
+                                   return `$${value.toFixed(1)}`; // Default
+                               }}
                         />
                         <Tooltip
-                            formatter={(value) => [`$${value.toFixed(2)}`, "Price"]}
+                            formatter={(value) => [`$${value}`, "Price"]}
                             labelFormatter={(label) => `Time: ${label}`}
 
                             contentStyle={{ background: "rgba(0, 0, 0, 0.6)", color: "#fff", borderRadius: "5px", padding: "10px" }}
@@ -46,10 +51,15 @@ class Chart extends React.Component<{ data: any, chartType: any, xAxisLabel:any,
                         />
                         <YAxis stroke='white' dataKey="y"
                                label={{ value: '', angle: -90, position: 'insideLeft', fill:'white' }}
-                               tickFormatter={(value) => `$${value.toFixed(2)}`}
+                               tickFormatter={(value) => {
+                                   if (value >= 1e9) return `$${(value / 1e9).toFixed(1)}B`; // Billion
+                                   if (value >= 1e6) return `$${(value / 1e6).toFixed(1)}M`; // Million
+                                   if (value >= 1e3) return `$${(value / 1e3).toFixed(1)}K`; // Thousand
+                                   return `$${value.toFixed(1)}`; // Default
+                               }}
                         />
                         <Tooltip
-                            formatter={(value) => [`$${value.toFixed(2)}`, "Price"]}
+                            formatter={(value) => [`$${value}`, "Price"]}
                             labelFormatter={(label) => `Time: ${label}`}
                             contentStyle={{ background: "rgba(0, 0, 0, 0.6)", color: "#fff", borderRadius: "5px", padding: "10px" }}
                         />
@@ -64,7 +74,13 @@ class Chart extends React.Component<{ data: any, chartType: any, xAxisLabel:any,
                         />
                         <YAxis domain={['dataMin - 1', 'dataMax + 1']}
                                stroke='white'
-                               tickFormatter={(value) => `$${value.toFixed(2)}`}
+                               // tickFormatter={(value) => `$${value.toFixed(2)}`}
+                               tickFormatter={(value) => {
+                                   if (value >= 1e9) return `$${(value / 1e9).toFixed(1)}B`; // Billion
+                                   if (value >= 1e6) return `$${(value / 1e6).toFixed(1)}M`; // Million
+                                   if (value >= 1e3) return `$${(value / 1e3).toFixed(1)}K`; // Thousand
+                                   return `$${value.toFixed(1)}`; // Default
+                               }}
                                label={{
                                    value: '',
                                    angle: -90,
@@ -73,7 +89,7 @@ class Chart extends React.Component<{ data: any, chartType: any, xAxisLabel:any,
                                    dx: -20
                         }} />
                         <Tooltip
-                            formatter={(value) => [`$${value.toFixed(2)}`, "Price"]}
+                            formatter={(value) => [`$${value}`, "Price"]}
                             labelFormatter={(label) => `Time: ${label}`}
                             contentStyle={{ background: "rgba(0, 0, 0, 0.6)", color: "#fff", borderRadius: "5px", padding: "10px" }}
                         />
