@@ -54,7 +54,7 @@ export default function Home() {
                       Intelligent Digital Asset Assistant
                   </h1>
                   <h2 className='font-monomaniac'>(IDAA)</h2>
-                  <h3 className='font-monomaniac' style={{color:'#B4B5B4'}}>Aditya Nikhil Digala, Yang Wu, Vaishnavi Vella</h3>
+                  <h3 className='font-monomaniac' style={{color:'#B4B5B4'}}>Aditya Nikhil Digala, Yang Wu, Vaeshnavi Vella</h3>
               </div>
               {success && <Logout onSuccess={onLogoutClick}  />}
 

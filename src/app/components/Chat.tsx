@@ -12,7 +12,7 @@ import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 
 export default function Chat() {
     const [userInput, setUserInput] = useState("");
-    const [messages, setMessages] = useState<{ type: 'user' | 'bot', text: string | JSX.Element, loading?: boolean }[]>([]);
+    const [messages, setMessages] = useState<{ type: 'user' | 'bot', text: string | JSX.Element, chat?:string, loading?: boolean }[]>([]);
     const [isSubmitting, setIsSubmitting] = useState(false);
     const messagesContainerRef = useRef<HTMLDivElement | null>(null);
     const alertMessage = 'Oooops! Network error, please try again later.'
@@ -56,14 +56,25 @@ export default function Chat() {
         sendMessage(userInput)
             .then((res)=>{
                 setIsSubmitting(false)
-                if(res && res.agent_result) {
-                    const botReply = res.agent_result || "Sorry, I didn't understand that."; // Ensure fallback
-                    // Replace "Thinking..." with the actual bot reply
-                    setMessages((prev) =>
-                        prev.map((msg) =>
-                            msg.loading ? { ...msg, text: botReply, loading: false } : msg
-                        )
-                    );
+                if(res && res.response) {
+                    const botReply = res.response || "Sorry, I didn't understand that."; // Ensure fallback
+                    const viz_code = res.viz_code
+                    if (viz_code && viz_code.length > 0) {
+                        setMessages((prev) =>
+                            prev.map((msg) =>
+                                msg.loading ? {...msg, text: botReply, chat:viz_code, loading: false} : msg
+                            )
+                        );
+                    }
+                    else {
+                        // Replace "Thinking..." with the actual bot reply
+                        setMessages((prev) =>
+                            prev.map((msg) =>
+                                msg.loading ? {...msg, text: botReply, loading: false} : msg
+                            )
+                        );
+                    }
+
                 }
                 else {
                     setMessages((prev) => prev.filter((msg) => !msg.loading))
@@ -84,7 +95,7 @@ export default function Chat() {
                 {messages.map((msg, index) =>
                     msg.type === 'user' ?
                         <DialogueUser key={index} userReply={msg.text.toString()} /> :
-                        <DialogueChatBot key={index} chatbotReply={msg.text} />
+                        <DialogueChatBot key={index} chatbotReply={msg.text} chatbotChat={msg.chat}/>
                 )}
             </div>
             <div className="relative">

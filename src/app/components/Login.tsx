@@ -1,7 +1,7 @@
 'use client'
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
-import {useState, useEffect} from "react";
+import {useState} from "react";
 import testAccount from '@/data/test-account.json'
 
 interface LoginProps {
