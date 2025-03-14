@@ -9,10 +9,18 @@ import {sendMessage} from '@/app/api/handler'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 
+type ChatbotChat = {
+    x: string[];
+    series: { [key: string]: number[] };
+    x_label: string;
+    y_label: string;
+    title: string;
+    chart_type: "line" | "bar";
+};
 
 export default function Chat() {
     const [userInput, setUserInput] = useState("");
-    const [messages, setMessages] = useState<{ type: 'user' | 'bot', text: string | JSX.Element, chat?:string, loading?: boolean }[]>([]);
+    const [messages, setMessages] = useState<{ type: 'user' | 'bot', text: string | JSX.Element, chat?:ChatbotChat, loading?: boolean }[]>([]);
     const [isSubmitting, setIsSubmitting] = useState(false);
     const messagesContainerRef = useRef<HTMLDivElement | null>(null);
     const alertMessage = 'Oooops! Network error, please try again later.'
@@ -25,6 +33,9 @@ export default function Chat() {
             messagesContainerRef.current.scrollTop = messagesContainerRef.current.scrollHeight;
         }
     }
+
+    const isEmptyObject = (obj: object) => Object.keys(obj).length === 0;
+
 
     useEffect(() => {
         scrollToBotton();
@@ -58,11 +69,13 @@ export default function Chat() {
                 setIsSubmitting(false)
                 if(res && res.response) {
                     const botReply = res.response || "Sorry, I didn't understand that."; // Ensure fallback
-                    const viz_code = res.viz_code
-                    if (viz_code && viz_code.length > 0) {
+                    const data = res.data
+                    console.log(data)
+                    debugger
+                    if (data && (typeof data === "object" && !isEmptyObject(data))) {
                         setMessages((prev) =>
                             prev.map((msg) =>
-                                msg.loading ? {...msg, text: botReply, chat:viz_code, loading: false} : msg
+                                msg.loading ? {...msg, text: botReply, chat:data, loading: false} : msg
                             )
                         );
                     }
