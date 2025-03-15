@@ -1,7 +1,10 @@
 # Intelligent Digital Assets Assistant (IDAA)
 
-An intelligent chatbot similar to ChatGPT, specialized exclusively in cryptocurrency questions.  
+A frontend project of IDAA, an intelligent chatbot, specialized exclusively in cryptocurrency questions.  
+
 Backend service code is hosted at [AdityaNikhil/IDAA](https://github.com/AdityaNikhil/IDAA).
+
+This is our Capstone Project at **[Northeastern University](https://www.northeastern.edu/)**, program in **[Applied Machine Intelligence](https://cps.northeastern.edu/program/master-of-professional-studies-in-applied-machine-intelligence-boston/)**.
 
 ## Demo
 _(Demo coming soon)_
