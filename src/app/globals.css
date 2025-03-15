@@ -5,12 +5,14 @@
 :root {
   --background: #fff;
   --foreground: #191A1A;
+  --msg-background: rgba(48, 48, 48, 0.1)
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #191A1A;
     --foreground: #fff;
+    --msg-background: rgba(48, 48, 48, 0.3)
   }
 }
 
@@ -34,7 +36,58 @@ html,body,main{height:100%}
 body {
   color:var(--foreground);
   background: var(--background);
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
+
+body.light {
+  background-color: white;
+  color: black;
+}
+
+body.dark {
+  background-color: #121212;
+  color: white;
+}
+
+body.dark .msg-bg {
+  background-color: rgba(48, 48, 48, 0.3);
+}
+
+body.light .msg-bg,
+.msg-bg {
+  background-color: rgba(48, 48, 48, 0.1); /* Adjust default or fallback color */
+}
+
+body.light .chart-container {
+  background-color: rgba(48, 48, 48, 0.1);
+  color: black;
+}
+
+/* Chart axis & legend color */
+body.dark .recharts-cartesian-axis-tick-value,
+body.dark .recharts-legend-item-text {
+  fill: white;
+}
+
+/* Chart Grid Line Color */
+body.dark .recharts-cartesian-grid line {
+  stroke: rgba(255, 255, 255, 0.4);
+}
+
+body.light .recharts-cartesian-axis-tick-value,
+body.light .recharts-legend-item-text {
+  fill: black;
+}
+
+body.dark .recharts-legend-item-text {
+  fill: white;
+}
+
+body.light .recharts-cartesian-axis-tick-value,
+body.light .recharts-legend-item-text {
+  fill: black;
+}
+
 h1{font-size: xxx-large; font-weight: bolder}
 h2{font-size: xx-large; font-weight: bold}
 h3{font-size: large;}

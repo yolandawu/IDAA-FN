@@ -16,7 +16,7 @@ export default function Logout({onSuccess }:LogoutProps) {
     }
 
     return (
-        <div className='absolute top-6 right-10' >
+        <div>
             <Link href="/" onClick={onLogoutClick}>Logout</Link>
         </div>
 

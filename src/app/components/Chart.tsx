@@ -57,12 +57,10 @@ class Chart extends React.Component<ChartProps> {
                     {chart_type === 'bar' ? (
                         <BarChart data={data}>
                             <CartesianGrid strokeDasharray="3 3" vertical={false}/>
-                            <XAxis stroke='white'
-                                   dataKey={x_label}  label={{ value: '', position: 'insideBottom', offset: -0, fill:'white' }}
+                            <XAxis dataKey={x_label}  label={{ value: '', position: 'insideBottom', offset: -0, fill:'white' }}
                                    tick={{dy:10}}
                             />
-                            <YAxis stroke='white'
-                                   label={{ value: '', angle: -90, position: 'insideLeft', fill:'white' }}
+                            <YAxis label={{ value: '', angle: -90, position: 'insideLeft', fill:'white' }}
                                    tickFormatter={(value) => {
                                        if (value >= 1e9) return `$${(value / 1e9).toFixed(1)}B`; // Billion
                                        if (value >= 1e6) return `$${(value / 1e6).toFixed(1)}M`; // Million
@@ -88,12 +86,11 @@ class Chart extends React.Component<ChartProps> {
                     ) : (
                         <LineChart data={data}>
                             <CartesianGrid strokeDasharray="3 3"/>
-                            <XAxis stroke='white' dataKey={x_label}
+                            <XAxis dataKey={x_label}
                                    label={{ value: '', position: 'insideBottom', offset: 10, fill:'white' }}
                                    tick={{dy:10}}
                             />
                             <YAxis domain={["auto", "auto"]}
-                                   stroke='white'
                                    tickFormatter={(value) => {
                                        if (value >= 1e9) return `$${(value / 1e9).toFixed(1)}B`; // Billion
                                        if (value >= 1e6) return `$${(value / 1e6).toFixed(1)}M`; // Million

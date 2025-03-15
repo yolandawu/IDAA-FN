@@ -31,7 +31,7 @@ export default function DialogueChatBot({ chatbotReply, chatbotChat }: {
     return (
         <div className='w-full py-2'>
             <div className='flex p-2 w-full ml-1'>
-                <img className="rounded-xl" style={{ width: '40px', height: '40px' }} src={iconChatbot.src} alt='' />
+                <img className="rounded-xl mt-1" style={{ width: '40px', height: '40px' }} src={iconChatbot.src} alt='' />
                 {typeof chatbotReply === 'string' ? (
                     <ReactMarkdown
                         className='px-3 ml-1 flex-1 my-3 reactMarkDown'
