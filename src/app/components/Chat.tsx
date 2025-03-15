@@ -10,7 +10,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 
 type ChatbotChat = {
-    x: string[];
+    x: string[] | string[][];
     series: { [key: string]: number[] };
     x_label: string;
     y_label: string;
@@ -69,9 +69,9 @@ export default function Chat() {
                 setIsSubmitting(false)
                 if(res && res.response) {
                     const botReply = res.response || "Sorry, I didn't understand that."; // Ensure fallback
+
                     const data = res.data
                     console.log(data)
-                    debugger
                     if (data && (typeof data === "object" && !isEmptyObject(data))) {
                         setMessages((prev) =>
                             prev.map((msg) =>

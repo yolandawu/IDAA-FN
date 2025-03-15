@@ -5,7 +5,7 @@ import { JSX } from "react";
 import Chart from "@/app/components/Chart";
 
 type ChatbotChat = {
-    x: string[];
+    x: string[] | string[][];
     series: { [key: string]: number[] };
     x_label: string;
     y_label: string;

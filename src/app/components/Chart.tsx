@@ -2,14 +2,13 @@ import React from 'react';
 import {
     BarChart, Bar,
     LineChart, Line,
-    ScatterChart, Scatter,
     XAxis, YAxis, CartesianGrid,
     Tooltip, ResponsiveContainer,
     Legend
 } from 'recharts';
 
 type ChartProps = {
-    x: string[];
+    x: string[] | string[][];
     series: { [key: string]: number[] };
     x_label: string;
     y_label: string;
@@ -17,14 +16,21 @@ type ChartProps = {
     chart_type: "line" | "bar";
 };
 
+const colorPalette = ["#007bff", "#ff7f0e", "#2ca02c", "#d62728", "#9467bd"];
+
 class Chart extends React.Component<ChartProps> {
     render() {
-        const { x, series, chart_type, x_label, y_label, title } = this.props;
-        console.log("Received X:", x);
-        console.log("Received Series:", series);
-
+        const { x, series, chart_type, x_label, title } = this.props;
+        let X : string[]
+        if (x.length > 0 && Array.isArray(x[0])) {
+            X = x[0] as string[]
+        } else {
+            X = x as string[]
+        }
         const seriesNames = Object.keys(series)
-        const data = x.map((date, index) => {
+        const data = X.map((date, index) => {
+            console.log(X)
+
             const row: Record<string, string | number> = {};
             row[x_label] = date;
             seriesNames.forEach((name) => {
@@ -33,9 +39,7 @@ class Chart extends React.Component<ChartProps> {
             return row;
         });
 
-        console.log("Formatted Data for Recharts:", data);
-
-        const colors = ["#8884d8", "#82ca9d", "#ffc658", "#ff7300", "#d0ed57", "#a4de6c"];
+        console.log(data)
 
         return (
             <div style={{ position: 'relative', width: '100%', height: '400px' }}>
@@ -77,7 +81,7 @@ class Chart extends React.Component<ChartProps> {
                                 <Bar
                                     key={key}
                                     dataKey={key}
-                                    fill={`#${Math.floor(Math.random() * 16777215).toString(16)}`}
+                                    fill={colorPalette[index % colorPalette.length]}
                                 />
                             ))}
                         </BarChart>
@@ -90,7 +94,6 @@ class Chart extends React.Component<ChartProps> {
                             />
                             <YAxis domain={["auto", "auto"]}
                                    stroke='white'
-                                // tickFormatter={(value) => `$${value.toFixed(2)}`}
                                    tickFormatter={(value) => {
                                        if (value >= 1e9) return `$${(value / 1e9).toFixed(1)}B`; // Billion
                                        if (value >= 1e6) return `$${(value / 1e6).toFixed(1)}M`; // Million
@@ -117,7 +120,7 @@ class Chart extends React.Component<ChartProps> {
                                     key={key}
                                     type="monotone"
                                     dataKey={key}
-                                    stroke={`#${Math.floor(Math.random() * 16777215).toString(16)}`}
+                                    stroke={colorPalette[index % colorPalette.length]}
                                     strokeWidth={3}
                                 />
                             ))}
