@@ -7,8 +7,11 @@ Backend service code is hosted at [AdityaNikhil/IDAA](https://github.com/AdityaN
 This is our Capstone Project at **[Northeastern University](https://www.northeastern.edu/)**, program in **[Applied Machine Intelligence](https://cps.northeastern.edu/program/master-of-professional-studies-in-applied-machine-intelligence-boston/)**.
 
 ## Demo
-_(Demo coming soon)_
+[![Watch the video](https://img.youtube.com/vi/fR2ar-ChBDY/maxresdefault.jpg)](https://youtu.be/fR2ar-ChBDY)
 
+ [Watch this video on YouTube](https://youtu.be/fR2ar-ChBDY)
+
+ 
 ## Features
 
 - **Educator**: Learn fundamental concepts and advanced cryptocurrency topics.
