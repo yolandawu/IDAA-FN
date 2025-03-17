@@ -104,14 +104,17 @@ export default function Chat() {
 
     return (
         <div className=" text-left flex flex-col relateive" style={{height:'80%'}}>
+            {messages.length > 0 ? (
             <div className='py-5 flex-1 overflow-scroll' ref={messagesContainerRef}>
                 {messages.map((msg, index) =>
                     msg.type === 'user' ?
                         <DialogueUser key={index} userReply={msg.text.toString()} /> :
                         <DialogueChatBot key={index} chatbotReply={msg.text} chatbotChat={msg.chat}/>
                 )}
-            </div>
-            <div className="relative">
+            </div>)
+                : (<div></div>)}
+            <div className={`relative ${messages.length > 0 ? '': 'w-1/2 m-auto mt-32'}`}>
+                <h3 className={`${messages.length > 0 ? 'hidden': 'text-center mb-4'}`}>What can I help with?</h3>
                 <div className="w-full">
                     <TextField
                         label=""

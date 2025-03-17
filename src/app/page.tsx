@@ -75,7 +75,7 @@ export default function Home() {
                   <h2 className='font-monomaniac'>(IDAA)</h2>
                   <h3 className='font-monomaniac' style={{opacity:0.6}}>Aditya Nikhil Digala, Yang Wu, Vaeshnavi Vella</h3>
               </div>
-              <div  className='absolute top-6 right-10' >
+              <div  className='absolute top-6 right-10 text-right' >
                   <Switch defaultChecked onClick={toggleTheme}/><span>{isDark ? 'Dark' : 'Light'}</span>
                   {/*<button onClick={toggleTheme} style={{display: 'inline-block', position:"absolute", right:10, top:'50px'}}>*/}
                   {/*    Switch to {theme === "light" ? "Dark" : "Light"} Mode*/}
